@@ -96,8 +96,9 @@ The application follows a clean, scalable architecture with proper separation of
 ## API Endpoints
 
 - `POST /api/chat`: Send a message and get a response
-- `GET /api/history/:sessionId`: Get chat history for a session
-- `POST /api/reset/:sessionId`: Reset chat history for a session
+- `GET /api/session/history`: Get chat history for a session
+- `POST /api/session/reset`: Reset chat history for a session
+- `POST /api/refresh-embeddings`: Refresh the news embeddings database
 
 ## Caching Strategy
 
