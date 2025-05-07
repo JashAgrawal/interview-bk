@@ -1,7 +1,8 @@
 import { ChromaClient, Collection } from "chromadb";
 import { JinaEmbeddingFunction } from "chromadb";
-import { config } from "./env";
-import { getFeed } from "./rss";
+import { config } from "../config";
+import { getFeed } from "../utils";
+import { ProcessedFeed } from "../types";
 
 /**
  * EmbeddingService - A class-based service for managing embeddings in Chroma vector database
@@ -26,7 +27,7 @@ export class EmbeddingService {
    * @param jinaApiKey The API key for Jina embeddings (defaults from config)
    */
   constructor(
-    collectionName: string = "news",
+    collectionName: string = config.CHROMA_COLLECTION_NAME,
     chromaHost: string = config.CHROMA_API_HOST,
     jinaApiKey: string = config.JINA_EMBEDDING_API_KEY
   ) {
@@ -108,7 +109,7 @@ export class EmbeddingService {
       });
 
       // Get feed data
-      const feed = await getFeed();
+      const feed: ProcessedFeed = await getFeed();
 
       // Add documents to collection
       await this.collection.add({
@@ -186,9 +187,3 @@ export class EmbeddingService {
     return this.collection;
   }
 }
-
-// Export a singleton instance for use throughout the application
-export const embeddingService = new EmbeddingService();
-
-// Also export the class for cases where a new instance is needed
-export default EmbeddingService;
