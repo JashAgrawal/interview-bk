@@ -3,6 +3,7 @@ import morgan from 'morgan';
 import dotenv from 'dotenv';
 import { config } from './config';
 import routes from './routes';
+import cors from 'cors';
 import { embeddingService, redisService } from './services';
 
 // Load environment variables
@@ -15,9 +16,12 @@ const PORT = config.PORT;
 // Middleware
 app.use(morgan('dev')); // Request logger
 app.use(express.json()); // Parse JSON bodies
+app.use(cors());
 
 // Mount routes
 app.use(routes);
+
+
 
 // Initialize services
 const initializeServices = async (): Promise<void> => {
